@@ -1,6 +1,6 @@
-const name = 'Peditree';
-const main = () => {
-    console.log(name);
-};
+import {buildServer} from './server';
 
-main();
+const app = buildServer();
+app.listen(3000, () => {
+    console.log('Listening on port 3000');
+});
