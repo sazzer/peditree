@@ -4,6 +4,7 @@ import compression from 'compression';
 import slash from 'express-slash';
 import methodOverride from 'method-override';
 import responseTime from 'response-time';
+import {registerRoutes} from './routes';
 
 export function buildServer() {
     const app = express();
@@ -22,8 +23,7 @@ export function buildServer() {
     app.use(router);
     app.use(slash());
 
-    router.get('/api/hello', (req, res) => res.send({name: 'Hello, World'}));
-    router.post('/api/hello', (req, res) => res.send({name: 'Goodbye, World'}));
+    registerRoutes(router);
 
     return app;
 }
