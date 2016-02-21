@@ -8,7 +8,7 @@ module.exports = function(grunt) {
             options: {
                 sourceMap: true,
                 presets: ['es2015']
-            }, 
+            },
             main: {
                 files: [{
                     expand: true,
@@ -22,7 +22,7 @@ module.exports = function(grunt) {
         eslint: {
             options: {
                 configFile: 'eslintrc'
-            }, 
+            },
             main: {
                 files: [{
                     expand: true,
@@ -41,10 +41,31 @@ module.exports = function(grunt) {
             main: {
                 path: 'src/server'
             }
+        },
+        mocha_istanbul: {
+            options: {
+                scriptPath: './node_modules/.bin/babel-istanbul'
+            },
+            main: {
+                src: 'target/server/**/__test__',
+                options: {
+                    root: 'target/server',
+                    coverageFolder: 'target/coverage',
+                    mask: '*.spec.js',
+                    excludes: [
+                        '*.spec.js'
+                    ],
+                    reportFormats: [
+                        'lcov',
+                        'text-summary',
+                        'text'
+                    ]
+                }
+            }
         }
     });
 
     grunt.registerTask('build', ['eslint:main', 'jscpd:main', 'babel:main']);
+    grunt.registerTask('test', ['build', 'mocha_istanbul:main']);
     grunt.registerTask('start', ['build', 'execute:main']);
 };
-
